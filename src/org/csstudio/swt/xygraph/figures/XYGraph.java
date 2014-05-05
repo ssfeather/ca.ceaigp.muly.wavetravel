@@ -738,7 +738,7 @@ public class XYGraph extends Figure
 				trace2.setTraceColor(new Color(null, new RGB(0,0,255)));
 				
 				this.addTrace(trace2);
-				//this.removeTrace(trace2);
+				this.removeTrace(trace2);
 		//-----------------------------------------------------------------------------------------------------
 		
 		return sacFn;
