@@ -17,12 +17,9 @@ import edu.sc.seis.TauP.TT_Curve;
 public class DrawCurve
 {
 	private XYGraph swtFigure;
-	//Axis x1Axis = new Axis("X2", false);
-	//Axis y1Axis = new Axis("Y2", true);
 
 	public DrawCurve(final XYGraph swtFigure)
     {
-		this.swtFigure = swtFigure;
 		/*
 		x1Axis.setTitle("Time");
 		y1Axis.setTitle("Dist");
@@ -36,6 +33,16 @@ public class DrawCurve
 		//swtFigure.primaryXAxis.setAutoFormat(true);
 		swtFigure.getPlotArea().setShowBorder(true);
 		*/
+		swtFigure.primaryXAxis.setTitle("Time");
+		swtFigure.primaryYAxis.setTitle("Dist");
+		swtFigure.primaryYAxis.setAutoScale(true);
+		swtFigure.primaryXAxis.setAutoScale(true);
+		swtFigure.primaryXAxis.setShowMajorGrid(true);
+		swtFigure.primaryYAxis.setShowMajorGrid(true);
+		//swtFigure.primaryXAxis.setAutoFormat(true);
+		swtFigure.getPlotArea().setShowBorder(true);
+		
+		this.swtFigure = swtFigure;
     }
 	
 	public void createCurve(String[] travelArgs)

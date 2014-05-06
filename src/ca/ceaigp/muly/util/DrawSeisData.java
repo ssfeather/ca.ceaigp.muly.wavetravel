@@ -3,6 +3,7 @@ package ca.ceaigp.muly.util;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 
 import org.csstudio.swt.xygraph.dataprovider.CircularBufferDataProvider;
@@ -33,44 +34,28 @@ public class DrawSeisData
 
 	public DrawSeisData(String fileName, final XYGraph swtFigure)
 	{
-		//swtFigure.erase();
-		System.out.println(swtFigure.getTitle());
 		List<Axis> axisList = swtFigure.getAxisList();
 		for(Axis axis : axisList)
 		{
-			//swtFigure.removeAxis(axis);
 			List<Trace> traceList = axis.getTraceList();
-			//traceList.clear();
-				
-			if(axis.isYAxis())
+			int n = traceList.size();
+			for (int i = n - 1; i >= 0; i--)
 			{
-				for(Trace trace : traceList)
-				{
-					System.out.println(axis.toString() + ":" + trace.getName());
-					//axis.removeTrace(trace);
-					swtFigure.removeTrace(trace);
-					traceList = axis.getTraceList(); 
-					if (traceList.isEmpty()) break;
-				}
+				Trace trace = traceList.get(i);
+				//System.out.println(axis.toString() + ":" + trace.getName());
+				//System.out.println(traceList.size());
+				swtFigure.removeTrace(trace);
+				axis.removeTrace(trace);
+				//System.out.println(traceList.size());
 			}
-			System.out.println(axis.toString());
+			
+			//System.out.println(axis.toString());
 			if(!axis.isShowMajorGrid())
 			{
-				axis.removeAll();
+				//axis.removeAll();
 				swtFigure.removeAxis(axis);
 			}
 		}
-		System.out.println("---------------------------------");
-		
-		List<Trace> ptraceList = swtFigure.primaryXAxis.getTraceList();
-		//ptraceList.removeAll(axisList);
-		
-		for (Trace trace : ptraceList)
-		{
-			System.out.println(swtFigure.primaryXAxis.toString() + ":" + trace.getName());
-			System.out.println(swtFigure.primaryXAxis.removeTrace(trace));
-		}
-	
 		
 		//»­×ßÊ±ÇúÏß
 		DrawCurve dc = new DrawCurve(swtFigure);
