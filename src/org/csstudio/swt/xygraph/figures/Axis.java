@@ -347,7 +347,7 @@ public class Axis extends LinearScale
 		// Anything to do? Autoscale not enabled nor forced?
 		if (traceList.size() <= 0 || !(force || autoScale)) return false;
 		if (!force && xyGraph.getZoomType() != ZoomType.NONE) return false;
-
+		
 		// Get range of data in all traces
 		final Range range = getTraceDataRange();
 		if (range == null) return false;
@@ -389,8 +389,11 @@ public class Axis extends LinearScale
 		// tempMax = tempMax2;
 		// Any change at all?
 		if ((Double.doubleToLongBits(tempMin) == Double.doubleToLongBits(min) && Double.doubleToLongBits(tempMax) == Double.doubleToLongBits(max))
-		        || Double.isInfinite(tempMin) || Double.isInfinite(tempMax) || Double.isNaN(tempMin) || Double.isNaN(tempMax)) return false;
-
+		        || Double.isInfinite(tempMin) || Double.isInfinite(tempMax) || Double.isNaN(tempMin) || Double.isNaN(tempMax)) 
+		{	
+			return false;
+		}
+		
 		if (isLogScaleEnabled())
 		{ // Revert from log space
 			tempMin = Log10.pow10(tempMin);
@@ -473,6 +476,7 @@ public class Axis extends LinearScale
 
 		boolean oldAutoScale = this.autoScale;
 		this.autoScale = autoScale;
+		//System.out.println(performAutoScale(false));
 		performAutoScale(false);
 		fireAxisAutoScaleChanged(oldAutoScale, this.autoScale);
 	}

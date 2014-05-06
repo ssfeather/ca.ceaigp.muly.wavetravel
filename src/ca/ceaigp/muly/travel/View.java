@@ -1,16 +1,7 @@
 package ca.ceaigp.muly.travel;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import org.csstudio.swt.xygraph.dataprovider.CircularBufferDataProvider;
-import org.csstudio.swt.xygraph.figures.Axis;
 import org.csstudio.swt.xygraph.figures.ToolbarArmedXYGraph;
-import org.csstudio.swt.xygraph.figures.Trace;
 import org.csstudio.swt.xygraph.figures.XYGraph;
-import org.csstudio.swt.xygraph.linearscale.AbstractScale.LabelSide;
-import org.csstudio.swt.xygraph.linearscale.Range;
 import org.csstudio.swt.xygraph.util.XYGraphMediaFactory;
 import org.eclipse.draw2d.LightweightSystem;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -18,17 +9,12 @@ import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
-
-import edu.sc.seis.seisFile.sac.SacTimeSeries;
-
 
 public class View extends ViewPart
 {
@@ -81,26 +67,6 @@ public class View extends ViewPart
 		}
 	}
 	
-	private SacTimeSeries getSacData(String fn)
-	{
-		SacTimeSeries sac = new SacTimeSeries();
-		try
-        {
-	       sac.read(new File(fn));
-        }
-        catch (FileNotFoundException e)
-        {
-	        // TODO Auto-generated catch block
-	        e.printStackTrace();
-        }
-        catch (IOException e)
-        {
-	        // TODO Auto-generated catch block
-	        e.printStackTrace();
-        }
-		return sac;
-	}
-	
 	/**
 	 * This is a callback that will allow us to create the viewer and initialize
 	 * it.
@@ -124,128 +90,15 @@ public class View extends ViewPart
 		swtFigure.setFont(XYGraphMediaFactory.getInstance().getFont(XYGraphMediaFactory.FONT_TAHOMA));
 		swtFigure.primaryXAxis.setTitle("Time");
 		swtFigure.primaryYAxis.setTitle("Dist");
-		//swtFigure.primaryXAxis.setRange(new Range(0,200));
-		//swtFigure.primaryYAxis.setRange(new Range(-200,200));
-		//swtFigure.primaryXAxis.setDateEnabled(true);
 		swtFigure.primaryYAxis.setAutoScale(true);
 		swtFigure.primaryXAxis.setAutoScale(true);
 		swtFigure.primaryXAxis.setShowMajorGrid(true);
 		swtFigure.primaryYAxis.setShowMajorGrid(true);
 		//swtFigure.primaryXAxis.setAutoFormat(true);
-		//swtFigure.getPlotArea().setShowBorder(true);
-		//�����᲻�ɼ�
-		//swtFigure.primaryXAxis.setVisible(false);
-		//swtFigure.primaryYAxis.setVisible(false);
-		
-		//--------------------------------------------------------------------------------------------------------
-		// Taup Draw Curve
-		String[] travelArgs = new String[3];
-		travelArgs[0] = "jb";
-		travelArgs[1] = "600";
-		travelArgs[2] = "P, S, Pn, Sn, PcP, ScS";
-		//travelArgs[2] = "p, s, P, S";
-		new DrawCurve(travelArgs, swtFigure);
-		
-		travelArgs[0] = "jb";
-		travelArgs[1] = "400";
-		travelArgs[2] = "P, S, Pn, Sn, PcP, ScS";
-		new DrawCurve(travelArgs, swtFigure);
-		
-		travelArgs[0] = "jb";
-		travelArgs[1] = "200";
-		travelArgs[2] = "P, S, Pn, Sn, PcP, ScS";
-		new DrawCurve(travelArgs, swtFigure);
-		
-		travelArgs[0] = "jb";
-		travelArgs[1] = "100";
-		travelArgs[2] = "P, S, Pn, Sn, PcP, ScS";
-		new DrawCurve(travelArgs, swtFigure);
-		
-		travelArgs[0] = "jb";
-		travelArgs[1] = "10";
-		travelArgs[2] = "P, S, Pn, Sn, PcP, ScS";
-		new DrawCurve(travelArgs, swtFigure);
-		
-		//--------------------------------------------------------------------------------------------------------
-/*		
-		SacTimeSeries sac1 = getSacData("/Users/macuser/SeisData/test2.sac");
-		CircularBufferDataProvider traceDataProvider1 = new CircularBufferDataProvider(true);
-		float[] sacx1 = sac1.getX();
-		float[] sacy1 = sac1.getY();
-		traceDataProvider1.setBufferSize(sacy1.length);
-		traceDataProvider1.setCurrentXDataArray(sacx1);
-		traceDataProvider1.setCurrentYDataArray(sacy1);
-	
-		Trace trace1 = new Trace("Wave1",swtFigure.primaryXAxis, swtFigure.primaryYAxis, traceDataProvider1);
-		swtFigure.addTrace(trace1);
-*/		
-/*		
+		swtFigure.getPlotArea().setShowBorder(true);
+			
 		//-----------------------------------------------------------------------------------------------------
 
-		//SacTimeSeries sac2 = getSacData("/Users/macuser/SeisData/test2.sac");
-		//SacTimeSeries sac2 = getSacData("/Volumes/DATA/TestData/20131201093000.sac/2013.335.01.30.00.0000.BJ.DHC.00.BHZ.D.SAC");
-		SacTimeSeries sac2 = getSacData("/Users/muly/temp/BU.201404250914.0002.sac/2014.115.01.13.56.0000.LN.SNY.00.BHZ.D.SAC");
-		float[] sacx2 = sac2.getX();
-		float[] sacy2 = sac2.getY();
-		
-		//System.out.println("Range X: " + (swtFigure.primaryXAxis.getRange().getUpper() - swtFigure.primaryXAxis.getRange().getLower()));
-		//System.out.println("Data Length: " + sac2.getHeader().getDelta() + " ; " + sac2.getNumPtsRead() + " ; " + sac2.getNumPtsRead()*sac2.getHeader().getDelta());
-		//double dataTimeScale = sac2.getNumPtsRead()*sac2.getHeader().getDelta()/(swtFigure.primaryXAxis.getRange().getUpper() - swtFigure.primaryXAxis.getRange().getLower());
-		//System.out.println("Data Time scale: " + dataTimeScale);
-		
-		CircularBufferDataProvider traceDataProvider2 = new CircularBufferDataProvider(true);
-		
-		//------------显示地震波形----------------------------
-		traceDataProvider2.setBufferSize(sacy2.length);
-		traceDataProvider2.setCurrentXDataArray(sacx2);
-		traceDataProvider2.setCurrentYDataArray(sacy2);
-		
-		//traceDataProvider2.addSample(sample);
-		//traceDataProvider2.getSample(1);
-		
-		//-------------------------------------------------------------------------------------------------------
-		Axis x2Axis = new Axis("X2", false);
-		Axis y2Axis = new Axis("Y2", true);
-		
-		x2Axis.setTickLableSide(LabelSide.Secondary);
-		y2Axis.setTickLableSide(LabelSide.Secondary);
-
-		x2Axis.setTitle("Time");
-		y2Axis.setTitle("Amplitude");
-		//x2Axis.setRange(new Range(0,200));
-		//y2Axis.setRange(new Range(-200,200));
-		//x2Axis.setDateEnabled(true);
-		
-		y2Axis.setAutoScale(true);
-		//x2Axis.setAutoScale(true);
-		
-		x2Axis.setRange(new Range(swtFigure.primaryXAxis.getRange().getLower(), swtFigure.primaryXAxis.getRange().getUpper()/sac2.getHeader().getDelta()));
-		//System.out.println(sac2.getHeader().getDelta());
-		//x2Axis.setRange(swtFigure.primaryXAxis.getRange());
-		y2Axis.setRange(swtFigure.primaryYAxis.getRange());
-		
-		//x2Axis.setShowMajorGrid(true);
-		//y2Axis.setShowMajorGrid(true);
-		x2Axis.setAutoScaleThreshold(0);
-		swtFigure.addAxis(x2Axis);
-		swtFigure.addAxis(y2Axis);
-		
-		//x2Axis.setVisible(false);
-		//y2Axis.setVisible(false);
-		
-		//------------------------------------------------------------------------------------------------------------------------
-
-		//MoveTrace trace2 = new MoveTrace("Wave2",swtFigure.primaryXAxis, swtFigure.primaryYAxis, traceDataProvider2);
-		//Trace trace2 = new Trace("Wave2",swtFigure.primaryXAxis, swtFigure.primaryYAxis, traceDataProvider2, true);
-		
-		//MoveTrace trace2 = new MoveTrace("Wave2",x2Axis, y2Axis, traceDataProvider2);
-		//trace2.setXYGraph(swtFigure);
-		Trace trace2 = new Trace("Wave",x2Axis, y2Axis, traceDataProvider2);
-		trace2.setEnableMove(true);
-		trace2.setTraceColor(new Color(null, new RGB(0,0,255)));
-		
-		swtFigure.addTrace(trace2);
-*/		
 		/*
 		//Test log4j     
         Properties prop = new Properties();

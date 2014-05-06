@@ -42,6 +42,8 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 
+import ca.ceaigp.muly.util.DrawSeisData;
+
 import edu.sc.seis.seisFile.sac.SacTimeSeries;
 
 /**
@@ -677,6 +679,7 @@ public class XYGraph extends Figure
 		final ZoomCommand command = new ZoomCommand("Auto Scale", xAxisList, yAxisList);
 		for (Axis axis : xAxisList)
 		{
+			//System.out.println(xAxisList.size());
 			axis.performAutoScale(true);
 		}
 		for (Axis axis : yAxisList)
@@ -687,9 +690,9 @@ public class XYGraph extends Figure
 		operationsManager.addCommand(command);
 	}
 	
-	public String performOpenFile()
+	public void performOpenFile()
 	{
-		String enter = System.getProperty("line.separator"); //系统中的回车  		  
+		//String enter = System.getProperty("line.separator"); //系统中的回车  		  
 		String seperator=File.separator; //系统中"\"or"/" 
 		//System.out.println(enter);
 		//System.out.println(seperator);
@@ -699,69 +702,11 @@ public class XYGraph extends Figure
 		fileDialog.setFilterPath(seperator); 
 		fileDialog.setFilterExtensions(new String[] {"*.sac","*.SAC"});
 		String sacFn = fileDialog.open();
-		System.out.println(sacFn);
-		
-		//-----------------------------------------------------------------------------------------------------
-				SacTimeSeries sac2 = getSacData(sacFn);
-				float[] sacx2 = sac2.getX();
-				float[] sacy2 = sac2.getY();
-				
-				CircularBufferDataProvider traceDataProvider2 = new CircularBufferDataProvider(true);
-				
-				//------------显示地震波形----------------------------
-				traceDataProvider2.setBufferSize(sacy2.length);
-				traceDataProvider2.setCurrentXDataArray(sacx2);
-				traceDataProvider2.setCurrentYDataArray(sacy2);
-				
-				//-------------------------------------------------------------------------------------------------------
-				Axis x2Axis = new Axis("X2", false);
-				Axis y2Axis = new Axis("Y2", true);
-				
-				x2Axis.setTickLableSide(LabelSide.Secondary);
-				y2Axis.setTickLableSide(LabelSide.Secondary);
-
-				x2Axis.setTitle("Time");
-				y2Axis.setTitle("Amplitude");
-				
-				y2Axis.setAutoScale(true);
-				
-				x2Axis.setRange(new Range(this.primaryXAxis.getRange().getLower(), this.primaryXAxis.getRange().getUpper()/sac2.getHeader().getDelta()));
-				y2Axis.setRange(this.primaryYAxis.getRange());
-				
-				x2Axis.setAutoScaleThreshold(0);
-				this.addAxis(x2Axis);
-				this.addAxis(y2Axis);
-				
-				//------------------------------------------------------------------------------------------------------------------------
-				Trace trace2 = new Trace("Wave",x2Axis, y2Axis, traceDataProvider2);
-				trace2.setEnableMove(true);
-				trace2.setTraceColor(new Color(null, new RGB(0,0,255)));
-				
-				this.addTrace(trace2);
-				this.removeTrace(trace2);
-		//-----------------------------------------------------------------------------------------------------
-		
-		return sacFn;
-	}
-	
-	private SacTimeSeries getSacData(String fn)
-	{
-		SacTimeSeries sac = new SacTimeSeries();
-		try
-        {
-	       sac.read(new File(fn));
-        }
-        catch (FileNotFoundException e)
-        {
-	        // TODO Auto-generated catch block
-	        e.printStackTrace();
-        }
-        catch (IOException e)
-        {
-	        // TODO Auto-generated catch block
-	        e.printStackTrace();
-        }
-		return sac;
+		//System.out.println(sacFn);
+		if (sacFn != null)
+		{
+			new DrawSeisData(sacFn, this);
+		}
 	}
 
 	/**
