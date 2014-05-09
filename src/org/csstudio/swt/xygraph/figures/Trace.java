@@ -20,11 +20,18 @@ import org.csstudio.swt.xygraph.dataprovider.IDataProvider;
 import org.csstudio.swt.xygraph.dataprovider.IDataProviderListener;
 import org.csstudio.swt.xygraph.dataprovider.ISample;
 import org.csstudio.swt.xygraph.dataprovider.Sample;
+import org.csstudio.swt.xygraph.figures.PlotArea.PlotMouseListener;
 import org.csstudio.swt.xygraph.linearscale.Range;
 import org.csstudio.swt.xygraph.linearscale.AbstractScale.LabelSide;
+import org.csstudio.swt.xygraph.undo.SaveStateCommand;
+import org.csstudio.swt.xygraph.undo.ZoomCommand;
+import org.csstudio.swt.xygraph.undo.ZoomType;
 import org.csstudio.swt.xygraph.util.SWTConstants;
 import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.Graphics;
+import org.eclipse.draw2d.MouseEvent;
+import org.eclipse.draw2d.MouseListener;
+import org.eclipse.draw2d.MouseMotionListener;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.Rectangle;
@@ -255,6 +262,10 @@ public class Trace extends Figure implements IDataProviderListener, IAxisListene
 		yAxis.addListener(this);
 		setDataProvider(dataProvider);
 		hotSampleist = new ArrayList<ISample>();
+		
+		//PlotMouseListener drap = new PlotMouseListener();
+		//addMouseListener(drap);
+		//addMouseMotionListener(drap);
 	}
 
 	private void drawErrorBar(Graphics graphics, Point dpPos, ISample dp)
@@ -1683,7 +1694,66 @@ public class Trace extends Figure implements IDataProviderListener, IAxisListene
 
 	public void setEnableMove(boolean enableMove)
     {
-    		this.enableMove = enableMove;
+		this.enableMove = enableMove;
     }
 	
+	public void setSingleEnableMove(boolean enableMove)
+    {
+		List<Trace> traces = xyGraph.getPlotArea().getTraceList();
+		for (int i = 0; i < traces.size(); ++i)
+		{
+			Trace trace = traces.get(i);
+			trace.setEnableMove(false);
+		}
+		this.enableMove = enableMove;
+    }
+	
+	/*---------------------------------------------------------------------------------------------
+	 *给Trace添加鼠标事件！效果不好！！！ 
+	 * 
+	 *	
+	private Point start;
+	private Point end;
+	private boolean armed;
+	
+	class PlotMouseListener extends MouseMotionListener.Stub implements MouseListener
+	{
+		public void mousePressed(final MouseEvent me)
+		{
+			// get start position
+			System.out.println("**** MousePressed NONE ****");
+			start = me.getLocation();
+			end = null;
+
+			//me.consume();
+		}
+
+		@Override
+		public void mouseDragged(final MouseEvent me)
+		{
+			System.out.println("**** MouseDragged ****");
+			//if (!armed) return;
+			
+			//System.out.println("**** MouseDragged NONE****");
+			end = me.getLocation();
+			//movePan();
+			xAxis.pan(xAxis.getRange(), xAxis.getPositionValue(start.x, false), xAxis.getPositionValue(end.x, false));
+			yAxis.pan(yAxis.getRange(), yAxis.getPositionValue(start.y, false), yAxis.getPositionValue(end.y, false));
+					
+			Trace.this.xyGraph.getPlotArea().repaint();
+		}
+		
+		@Override
+        public void mouseReleased(MouseEvent me)
+        {
+	        // TODO Auto-generated method stub
+        }
+
+		@Override
+        public void mouseDoubleClicked(MouseEvent me)
+        {
+	        // TODO Auto-generated method stub
+        }
+	}
+*/	
 }

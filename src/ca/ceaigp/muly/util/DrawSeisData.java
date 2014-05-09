@@ -3,15 +3,14 @@ package ca.ceaigp.muly.util;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 
 import org.csstudio.swt.xygraph.dataprovider.CircularBufferDataProvider;
 import org.csstudio.swt.xygraph.figures.Axis;
+import org.csstudio.swt.xygraph.figures.PlotArea;
 import org.csstudio.swt.xygraph.figures.Trace;
 import org.csstudio.swt.xygraph.figures.XYGraph;
 import org.csstudio.swt.xygraph.linearscale.Range;
-import org.csstudio.swt.xygraph.linearscale.AbstractScale.LabelSide;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 
@@ -34,6 +33,7 @@ public class DrawSeisData
 
 	public DrawSeisData(String fileName, final XYGraph swtFigure)
 	{
+		/*
 		List<Axis> axisList = swtFigure.getAxisList();
 		for(Axis axis : axisList)
 		{
@@ -45,6 +45,8 @@ public class DrawSeisData
 				//System.out.println(axis.toString() + ":" + trace.getName());
 				//System.out.println(traceList.size());
 				swtFigure.removeTrace(trace);
+				//System.out.println("PlotArea : " + plotArea.removeTrace(trace));
+				//swtFigure.removeTrace没有remove和Axis关联的trace，需调用axis.removeTrace移除
 				axis.removeTrace(trace);
 				//System.out.println(traceList.size());
 			}
@@ -56,11 +58,21 @@ public class DrawSeisData
 				swtFigure.removeAxis(axis);
 			}
 		}
+		*/
 		
-		//画走时曲线
-		DrawCurve dc = new DrawCurve(swtFigure);
-		//dc.createCurve("jb", "P, S, Pn, Sn, PcP, ScS", 100, 600, 100);
-		dc.createCurve("jb", "P, S", 10, 30, 10);
+		if (swtFigure.primaryXAxis.getTraceList().size() == 0)
+		{
+			swtFigure.removeAllTrace(true);
+		
+			//画走时曲线
+			DrawCurve dc = new DrawCurve(swtFigure);
+			//dc.createCurve("jb", "P, S, Pn, Sn, PcP, ScS", 100, 600, 100);
+			dc.createCurve("jb", "P, S", 10, 30, 10);
+		}
+		else
+		{
+			//swtFigure.removeAllTrace(false);
+		}
 		
 		//读波形数据
 		SacTimeSeries sac2 = getSacData(fileName);
@@ -99,11 +111,13 @@ public class DrawSeisData
 		y2Axis.setVisible(false);
 		
 		//------------------------------------------------------------------------------------------------------------------------
-		Trace trace2 = new Trace("Wave",x2Axis, y2Axis, traceDataProvider2);
+		String waveName = sac2.getHeader().getKnetwk() + ":" +sac2.getHeader().getKstnm() + ":" + sac2.getHeader().getKcmpnm();
+		Trace trace2 = new Trace(waveName,x2Axis, y2Axis, traceDataProvider2);
+		//trace2.setTraceColor(new Color(null, new RGB(0,0,255)));
 		trace2.setEnableMove(true);
-		trace2.setTraceColor(new Color(null, new RGB(0,0,255)));
-		
 		swtFigure.addTrace(trace2);
+		trace2.setSingleEnableMove(true);
+		//swtFigure.setShowLegend(false);
 		//this.removeTrace(trace2);
 		
 	}

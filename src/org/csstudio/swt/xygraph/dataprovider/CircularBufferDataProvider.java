@@ -25,7 +25,10 @@ public class CircularBufferDataProvider extends AbstractDataProvider
 
 	public enum UpdateMode
 	{
-		X_OR_Y("X or Y"), X_AND_Y("X AND Y"), X("X"), Y("Y"), TRIGGER("Trigger");
+		X_OR_Y("X or Y"), 
+		X_AND_Y("X AND Y"), 
+		X("X"), 
+		Y("Y"), TRIGGER("Trigger");
 
 		private UpdateMode(String description)
 		{
@@ -109,7 +112,7 @@ public class CircularBufferDataProvider extends AbstractDataProvider
 	/**
 	 * this indicates if the max and min of the data need to be recalculated.
 	 */
-	private boolean dataRangedirty = false;
+	protected boolean dataRangedirty = false;
 
 	private UpdateMode updateMode = UpdateMode.X_AND_Y;
 

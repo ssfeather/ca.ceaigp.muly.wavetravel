@@ -82,6 +82,30 @@ public class PlotArea extends Figure
 	private Point start;
 	private Point end;
 	private boolean armed;
+	
+	public Point getStart()
+    {
+    		return start;
+    }
+	public Point getEnd()
+    {
+		return end;
+    }
+
+	public void setEnd(Point end)
+    {
+    	this.end = end;
+    }
+		public void setStart(Point start)
+    {
+		this.start = start;
+    }
+	
+	public boolean isArmed()
+    {
+    	  return armed;
+    }
+
 	private Color revertBackColor;
 
 	public PlotArea(final XYGraph xyGraph)
@@ -386,9 +410,13 @@ public class PlotArea extends Figure
 					xAxisStartRangeList.clear();
 					yAxisStartRangeList.clear();
 					for (Axis axis : xyGraph.getXAxisList())
+					{
 						xAxisStartRangeList.add(axis.getRange());
+					}
 					for (Axis axis : xyGraph.getYAxisList())
+					{
 						yAxisStartRangeList.add(axis.getRange());
+					}
 					break;
 				case ZOOM_IN:
 				case ZOOM_IN_HORIZONTALLY:
@@ -567,15 +595,19 @@ public class PlotArea extends Figure
 		private void movePan()
 		{
 			List<Axis> axes = xyGraph.getXAxisList();
+			
 			for (int i = 0; i < axes.size(); ++i)
 			{
 				final Axis axis = axes.get(i);
-				//axis.setDirty(false);
-				for (Trace trace : axis.getTraceList())
+				if(!axis.isShowMajorGrid())
 				{
-					if (trace.isEnableMove())
+				//axis.setDirty(false);
+					for (Trace trace : axis.getTraceList())
 					{
-						axis.pan(xAxisStartRangeList.get(i), axis.getPositionValue(start.x, false), axis.getPositionValue(end.x, false));
+						if (trace.isEnableMove())
+						{
+							axis.pan(xAxisStartRangeList.get(i), axis.getPositionValue(start.x, false), axis.getPositionValue(end.x, false));
+						}
 					}
 				}
 			}
@@ -584,12 +616,15 @@ public class PlotArea extends Figure
 			for (int i = 0; i < axes.size(); ++i)
 			{
 				final Axis axis = axes.get(i);
-				//axis.setDirty(false);
-				for (Trace trace : axis.getTraceList())
+				if(!axis.isShowMajorGrid())
 				{
-					if (trace.isEnableMove())
+					//axis.setDirty(false);
+					for (Trace trace : axis.getTraceList())
 					{
-						axis.pan(yAxisStartRangeList.get(i), axis.getPositionValue(start.y, false), axis.getPositionValue(end.y, false));
+						if (trace.isEnableMove())
+						{
+							axis.pan(yAxisStartRangeList.get(i), axis.getPositionValue(start.y, false), axis.getPositionValue(end.y, false));
+						}
 					}
 				}
 			}

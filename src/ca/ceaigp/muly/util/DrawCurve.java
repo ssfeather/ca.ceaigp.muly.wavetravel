@@ -110,11 +110,15 @@ public class DrawCurve
 			traceDataProvider.setBufferSize(9000);
 			traceDataProvider.setCurrentXDataArray(times);
 			traceDataProvider.setCurrentYDataArray(dists);
-
+			
+			//swtFigure.primaryYAxis.setRange(traceDataProvider.getYDataMinMax().getUpper(), traceDataProvider.getYDataMinMax().getLower());
 			Trace trace1 = new Trace(ttc.phaseName + "_" + ttc.sourceDepth, swtFigure.primaryXAxis, swtFigure.primaryYAxis, traceDataProvider);
 			//Trace trace1 = new Trace(ttc.phaseName + "_" + ttc.sourceDepth, x1Axis, y1Axis, traceDataProvider);
 			this.swtFigure.addTrace(trace1);
 		}
+		//改变Y轴方向
+		swtFigure.primaryYAxis.setRange(swtFigure.primaryYAxis.getTraceDataRange().getUpper(), swtFigure.primaryYAxis.getTraceDataRange().getLower());
+		//swtFigure.primaryYAxis.setRange(30,5);
 	}
 	
 	public void createCurve(String model, String phaseList, int depthMin, int depthMax, int step)

@@ -13,9 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.csstudio.swt.xygraph.Preferences;
+import org.csstudio.swt.xygraph.figures.PlotArea.PlotMouseListener;
 import org.csstudio.swt.xygraph.util.XYGraphMediaFactory;
 import org.eclipse.draw2d.FigureUtilities;
 import org.eclipse.draw2d.Graphics;
+import org.eclipse.draw2d.MouseEvent;
+import org.eclipse.draw2d.MouseListener;
+import org.eclipse.draw2d.MouseMotionListener;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
@@ -46,9 +50,13 @@ public class Legend extends RectangleFigure
 	private final Color BLACK_COLOR = XYGraphMediaFactory.getInstance().getColor(XYGraphMediaFactory.COLOR_BLACK);
 
 	private final List<Trace> traceList = new ArrayList<Trace>();
+	
+	private final PlotArea plotArea;
 
 	public Legend(XYGraph xyGraph)
 	{
+		this.plotArea = xyGraph.getPlotArea();
+		
 		// setFont(LEGEND_FONT);
 		xyGraph.getPlotArea().addPropertyChangeListener(PlotArea.BACKGROUND_COLOR, new PropertyChangeListener()
 		{
@@ -62,6 +70,10 @@ public class Legend extends RectangleFigure
 		setForegroundColor(BLACK_COLOR);
 		setOpaque(false);
 		setOutline(true);
+		
+		LegendMouseListener clickLegend = new LegendMouseListener();
+		addMouseListener(clickLegend);
+		addMouseMotionListener(clickLegend);
 	}
 
 	/**
@@ -184,6 +196,45 @@ public class Legend extends RectangleFigure
 	public List<Trace> getTraceList()
 	{
 		return traceList;
+	}
+	
+	class LegendMouseListener extends MouseMotionListener.Stub implements MouseListener
+	{
+
+		@Override
+        public void mousePressed(MouseEvent me)
+        {
+	        // TODO Auto-generated method stub
+	        
+        }
+
+		@Override
+        public void mouseReleased(MouseEvent me)
+        {
+	        // TODO Auto-generated method stub
+			List<Trace> allTrace = plotArea.getTraceList();
+			List<Trace> legendTrace = getTraceList();
+			for (int i = 0; i < allTrace.size(); ++i)
+			{
+				Trace trace = allTrace.get(i);
+				trace.setEnableMove(false);
+			}
+			
+			for (int i = 0; i < legendTrace.size(); ++i)
+			{
+				Trace trace = legendTrace.get(i);
+				trace.setEnableMove(true);
+			}
+			
+        }
+
+		@Override
+        public void mouseDoubleClicked(MouseEvent me)
+        {
+	        // TODO Auto-generated method stub
+	        
+        }
+		
 	}
 
 }

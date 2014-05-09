@@ -437,7 +437,7 @@ public class XYGraph extends Figure
 		axis.setXyGraph(this);
 		revalidate();
 	}
-
+	
 	/**
 	 * Remove an axis from the graph
 	 * 
@@ -498,6 +498,62 @@ public class XYGraph extends Figure
 			}
 		}
 		plotArea.removeTrace(trace);
+		revalidate();
+		repaint();
+	}
+	
+	/**
+	 * Remove all trace
+	 * 
+	 * @author Leiyu.mu
+	 * @param includePrimyAxis 为true移除primaryXAxis和primaryYAxis相关联的Trace
+	 */
+	public void removeAllTrace(boolean includePrimyAxis)
+	{
+		List<Axis> axisList = this.getAxisList();
+		PlotArea plotArea = this.getPlotArea();
+		for(Axis axis : axisList)
+		{
+			//如果axis是主轴，且要移除Trace的轴不包括主轴上的Trace，不继续执行
+			if (includePrimyAxis == false && axis.isShowMajorGrid()) continue;
+			
+			List<Trace> traceList = axis.getTraceList();
+			int n = traceList.size();
+			for (int i = n - 1; i >= 0; i--)
+			{
+				Trace trace = traceList.get(i);
+				//System.out.println(axis.toString() + ":" + trace.getName());
+				//System.out.println(traceList.size());
+				if (legendMap.containsKey(trace.getYAxis()))
+				{
+					legendMap.get(trace.getYAxis()).removeTrace(trace);
+					if (legendMap.get(trace.getYAxis()).getTraceList().size() <= 0)
+					{
+						remove(legendMap.remove(trace.getYAxis()));
+					}
+				}
+				plotArea.removeTrace(trace);
+
+				//swtFigure.removeTrace没有remove和Axis关联的trace，需调用axis.removeTrace移除
+				axis.removeTrace(trace);
+				//System.out.println(traceList.size());
+				
+				if(!axis.isShowMajorGrid())
+				{
+					//this.removeAxis(axis);
+					remove(axis);
+					plotArea.removeGrid(axis.getGrid());
+					if (axis.isHorizontal()) 
+					{
+						xAxisList.remove(axis);
+					}
+					else
+					{
+						yAxisList.remove(axis);
+					}
+				}
+			}
+		}
 		revalidate();
 		repaint();
 	}
