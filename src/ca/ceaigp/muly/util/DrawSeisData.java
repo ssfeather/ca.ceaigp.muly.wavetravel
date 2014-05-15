@@ -19,7 +19,7 @@ import edu.sc.seis.seisFile.sac.SacTimeSeries;
 public class DrawSeisData
 {
 	//设置波形显示范围，Range大，波形显示小
-	private int zoomRange = 3;
+	private int zoomRange = 4;
 	
 	public int getZoomRange()
     {
@@ -67,10 +67,11 @@ public class DrawSeisData
 			//画走时曲线
 			DrawCurve dc = new DrawCurve(swtFigure);
 			//dc.createCurve("jb", "P, S, Pn, Sn, PcP, ScS", 100, 600, 100);
-			dc.createCurve("jb", "P, S", 10, 30, 10);
+			dc.createCurve("jb", "p,P,Pn,s,S,Sn", 10, 110, 50);
 		}
 		else
 		{
+			//移除所有与非主轴关联的Trace
 			//swtFigure.removeAllTrace(false);
 		}
 		
@@ -99,7 +100,7 @@ public class DrawSeisData
 		
 		//y2Axis.setAutoScale(false);
 		x2Axis.setRange(new Range(swtFigure.primaryXAxis.getRange().getLower(), swtFigure.primaryXAxis.getRange().getUpper()/sac2.getHeader().getDelta()));
-		y2Axis.setRange(traceDataProvider2.getYDataMinMax().getLower(), traceDataProvider2.getYDataMinMax().getUpper()*zoomRange);
+		y2Axis.setRange(traceDataProvider2.getYDataMinMax().getLower()*zoomRange, traceDataProvider2.getYDataMinMax().getUpper()*zoomRange);
 		//y2Axis.setRange(new Range(swtFigure.primaryYAxis.getRange().getLower(), swtFigure.primaryYAxis.getRange().getUpper()*200));
 		//System.out.println(swtFigure.primaryYAxis.getRange().getLower());
 		//System.out.println(swtFigure.primaryYAxis.getRange().getUpper());

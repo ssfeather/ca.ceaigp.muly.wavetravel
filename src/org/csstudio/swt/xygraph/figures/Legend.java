@@ -11,6 +11,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.csstudio.swt.xygraph.Preferences;
 import org.csstudio.swt.xygraph.figures.PlotArea.PlotMouseListener;
@@ -52,9 +53,12 @@ public class Legend extends RectangleFigure
 	private final List<Trace> traceList = new ArrayList<Trace>();
 	
 	private final PlotArea plotArea;
+	
+	private final XYGraph xyGraph;
 
 	public Legend(XYGraph xyGraph)
 	{
+		this.xyGraph = xyGraph;
 		this.plotArea = xyGraph.getPlotArea();
 		
 		// setFont(LEGEND_FONT);
@@ -71,6 +75,7 @@ public class Legend extends RectangleFigure
 		setOpaque(false);
 		setOutline(true);
 		
+		//添加鼠标事件
 		LegendMouseListener clickLegend = new LegendMouseListener();
 		addMouseListener(clickLegend);
 		addMouseMotionListener(clickLegend);
@@ -85,6 +90,9 @@ public class Legend extends RectangleFigure
 	public void addTrace(Trace trace)
 	{
 		traceList.add(trace);
+		
+		setAllLegendLineWidth(1);
+		setLineWidth(2);
 	}
 
 	/**
@@ -134,6 +142,17 @@ public class Legend extends RectangleFigure
 			i++;
 		}
 
+	}
+	
+	//设置legend边线宽
+	public void setAllLegendLineWidth(int w)
+	{
+		Map<Axis, Legend> legendMap = xyGraph.getLegendMap();
+		for (Map.Entry<Axis, Legend> entry : legendMap.entrySet()) 
+		{  
+			Legend legend = entry.getValue();
+			legend.setLineWidth(w);
+		} 
 	}
 
 	private void drawTraceLagend(Trace trace, Graphics graphics, int hPos, int vPos)
@@ -205,13 +224,13 @@ public class Legend extends RectangleFigure
         public void mousePressed(MouseEvent me)
         {
 	        // TODO Auto-generated method stub
-	        
+	        Legend.this.setLineWidth(2);
         }
 
 		@Override
         public void mouseReleased(MouseEvent me)
         {
-	        // TODO Auto-generated method stub
+	        // 选择要移动的波形
 			List<Trace> allTrace = plotArea.getTraceList();
 			List<Trace> legendTrace = getTraceList();
 			for (int i = 0; i < allTrace.size(); ++i)
@@ -226,13 +245,23 @@ public class Legend extends RectangleFigure
 				trace.setEnableMove(true);
 			}
 			
+			setAllLegendLineWidth(1);
+			Legend.this.setLineWidth(2);
+			
         }
 
 		@Override
         public void mouseDoubleClicked(MouseEvent me)
         {
-	        // TODO Auto-generated method stub
-	        
+	        // 删除波形
+			List<Trace> legendTrace = getTraceList();
+			for (int i = 0; i < legendTrace.size(); ++i)
+			{
+				Trace trace = legendTrace.get(i);
+				xyGraph.removeAxis(trace.getXAxis());
+				xyGraph.removeAxis(trace.getYAxis());
+				xyGraph.removeTrace(trace);
+			}
         }
 		
 	}

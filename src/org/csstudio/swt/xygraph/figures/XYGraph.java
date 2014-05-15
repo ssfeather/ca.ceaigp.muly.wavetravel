@@ -124,18 +124,20 @@ public class XYGraph extends Figure
 	 * Very hard to find a long list of distinct colors. This list is definitely
 	 * too short...
 	 */
-	final public static RGB[] DEFAULT_TRACES_COLOR = { new RGB(21, 21, 196), // blue
-	        new RGB(242, 26, 26), // red
-	        new RGB(33, 179, 33), // green
-	        new RGB(0, 0, 0), // black
-	        new RGB(128, 0, 255), // violett
-	        new RGB(255, 170, 0), // (darkish) yellow
-	        new RGB(255, 0, 240), // pink
-	        new RGB(243, 132, 132), // peachy
-	        new RGB(0, 255, 11), // neon green
-	        new RGB(0, 214, 255), // neon blue
-	        new RGB(114, 40, 3), // brown
-	        new RGB(219, 128, 4), // orange
+	final public static RGB[] DEFAULT_TRACES_COLOR = 
+	{ 		
+		new RGB(21, 21, 196), // blue
+	    new RGB(242, 26, 26), // red
+	    new RGB(33, 179, 33), // green
+	    new RGB(0, 0, 0), // black
+	    new RGB(128, 0, 255), // violett
+	    new RGB(255, 170, 0), // (darkish) yellow
+	    new RGB(255, 0, 240), // pink
+	    new RGB(243, 132, 132), // peachy
+	    new RGB(0, 255, 11), // neon green
+	    new RGB(0, 214, 255), // neon blue
+	    new RGB(114, 40, 3), // brown
+	    new RGB(219, 128, 4), // orange
 	};
 
 	private int traceNum = 0;

@@ -67,14 +67,17 @@ public class ZoomCommand extends SaveStateCommand
 
 	public void undo() {
 		int i=0;
-        if (xAxisList != null) {
-    		for(Axis axis : xAxisList){
-    			axis.setRange(beforeXRangeList.get(i));
-    			i++;
-    		}
+        if (xAxisList != null) 
+        {
+    			for(Axis axis : xAxisList)
+    			{
+    				axis.setRange(beforeXRangeList.get(i));
+    				i++;
+    			}
         }
 		i=0;
-		for(Axis axis : yAxisList){
+		for(Axis axis : yAxisList)
+		{
 			axis.setRange(beforeYRangeList.get(i));
 			i++;
 		}
