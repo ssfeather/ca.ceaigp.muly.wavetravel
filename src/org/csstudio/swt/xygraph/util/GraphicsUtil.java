@@ -25,7 +25,7 @@ public final class GraphicsUtil
 	private static boolean isRAP = SWT.getPlatform().startsWith("rap"); //$NON-NLS-1$;
 
 	/**
-	 * Draw vertical text.
+	 * DrawData vertical text.
 	 * 
 	 * @param graphics
 	 *            draw2D graphics.
@@ -84,7 +84,7 @@ public final class GraphicsUtil
 	}
 
 	/**
-	 * Draw vertical text.
+	 * DrawData vertical text.
 	 * 
 	 * @param graphics
 	 *            draw2D graphics.

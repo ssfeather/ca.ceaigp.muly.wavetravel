@@ -572,7 +572,7 @@ public class LinearScaleTickLabels extends Figure {
     };
 
     /**
-     * Draw the X tick.
+     * DrawData the X tick.
      * 
      * @param grahics
      *            the graphics context
@@ -591,7 +591,7 @@ public class LinearScaleTickLabels extends Figure {
     }
 
     /**
-     * Draw the Y tick.
+     * DrawData the Y tick.
      * 
      * @param grahpics
      *            the graphics context

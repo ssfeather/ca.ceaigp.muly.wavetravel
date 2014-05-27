@@ -80,7 +80,7 @@ public class Trace extends Figure implements IDataProviderListener, IAxisListene
 		POINT(Messages.TracePoint),
 
 		/**
-		 * Draw each data point as a bar whose width is defined by lineWidth.
+		 * DrawData each data point as a bar whose width is defined by lineWidth.
 		 * The data point is in the middle of the bar on X direction. The bottom
 		 * of the bar depends on the baseline. The alpha of the bar is defined
 		 * by areaAlpha.
@@ -105,7 +105,7 @@ public class Trace extends Figure implements IDataProviderListener, IAxisListene
 		 */
 		STEP_HORIZONTALLY(Messages.TraceStepHoriz);
 
-		/** Draw a single point. Only the last data point will be drawn. */
+		/** DrawData a single point. Only the last data point will be drawn. */
 		// SINGLE_POINT("Single Point");
 
 		private TraceType(String description)
@@ -355,7 +355,7 @@ public class Trace extends Figure implements IDataProviderListener, IAxisListene
 	}
 
 	/**
-	 * Draw point with the pointStyle and size of the trace;
+	 * DrawData point with the pointStyle and size of the trace;
 	 * 
 	 * @param graphics
 	 * @param pos
@@ -417,7 +417,7 @@ public class Trace extends Figure implements IDataProviderListener, IAxisListene
 	}
 
 	/**
-	 * Draw line with the line style and line width of the trace.
+	 * DrawData line with the line style and line width of the trace.
 	 * 
 	 * @param graphics
 	 * @param p1
@@ -478,7 +478,7 @@ public class Trace extends Figure implements IDataProviderListener, IAxisListene
 	}
 
 	/**
-	 * Draw polyline with the line style and line width of the trace.
+	 * DrawData polyline with the line style and line width of the trace.
 	 * 
 	 * @param graphics
 	 * @param pl
@@ -713,7 +713,7 @@ public class Trace extends Figure implements IDataProviderListener, IAxisListene
 									{
 										// The line for this trace is not
 										// continuous.
-										// Draw a polylin at this point, and
+										// DrawData a polylin at this point, and
 										// start to reconstruct a new
 										// polyline for the rest of the trace.
 
@@ -721,7 +721,7 @@ public class Trace extends Figure implements IDataProviderListener, IAxisListene
 										{
 											// There were several points which
 											// have the same X value.
-											// Draw lines that connect those
+											// DrawData lines that connect those
 											// points at once.
 											if (minInRegion != null) plPolyline.addPoint(minInRegion);
 											if (maxInRegion != null) plPolyline.addPoint(maxInRegion);
@@ -771,7 +771,7 @@ public class Trace extends Figure implements IDataProviderListener, IAxisListene
 											{
 												// There were several points
 												// which have the same X value.
-												// Draw lines that connect those
+												// DrawData lines that connect those
 												// points at once.
 												if (minInRegion != null) plPolyline.addPoint(minInRegion);
 												if (maxInRegion != null) plPolyline.addPoint(maxInRegion);
@@ -857,7 +857,7 @@ public class Trace extends Figure implements IDataProviderListener, IAxisListene
 									{
 										// The line for this trace may not be
 										// continuous.
-										// Draw a polyline at this point, and
+										// DrawData a polyline at this point, and
 										// start to reconstruct a new
 										// polyline for the rest of the trace.
 										drawPolyline(graphics, plPolyline);
@@ -941,11 +941,11 @@ public class Trace extends Figure implements IDataProviderListener, IAxisListene
 					case DASH_LINE:
 					case STEP_HORIZONTALLY:
 					case STEP_VERTICALLY:
-						// Draw polyline which was not drawn yet.
+						// DrawData polyline which was not drawn yet.
 						drawPolyline(graphics, plPolyline);
 						break;
 					case BAR:
-						// Draw bar lines
+						// DrawData bar lines
 						Set<Integer> xSet = bottomPoints.keySet();
 						for (Iterator<Integer> i = xSet.iterator(); i.hasNext();)
 						{

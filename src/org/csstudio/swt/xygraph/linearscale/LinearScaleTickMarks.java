@@ -99,7 +99,7 @@ public class LinearScaleTickMarks extends Figure {
 	}
 
     /**
-     * Draw the X tick marks.
+     * DrawData the X tick marks.
      * 
      * @param tickLabelPositions
      *            the tick label positions
@@ -204,7 +204,7 @@ public class LinearScaleTickMarks extends Figure {
 	}
 
     /**
-     * Draw the Y tick marks.
+     * DrawData the Y tick marks.
      * 
      * @param tickLabelPositions
      *            the tick label positions

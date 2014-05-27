@@ -33,48 +33,6 @@ public class DrawSeisData
 
 	public DrawSeisData(String fileName, final XYGraph swtFigure)
 	{
-		/*
-		List<Axis> axisList = swtFigure.getAxisList();
-		for(Axis axis : axisList)
-		{
-			List<Trace> traceList = axis.getTraceList();
-			int n = traceList.size();
-			for (int i = n - 1; i >= 0; i--)
-			{
-				Trace trace = traceList.get(i);
-				//System.out.println(axis.toString() + ":" + trace.getName());
-				//System.out.println(traceList.size());
-				swtFigure.removeTrace(trace);
-				//System.out.println("PlotArea : " + plotArea.removeTrace(trace));
-				//swtFigure.removeTrace没有remove和Axis关联的trace，需调用axis.removeTrace移除
-				axis.removeTrace(trace);
-				//System.out.println(traceList.size());
-			}
-			
-			//System.out.println(axis.toString());
-			if(!axis.isShowMajorGrid())
-			{
-				//axis.removeAll();
-				swtFigure.removeAxis(axis);
-			}
-		}
-		*/
-		
-		if (swtFigure.primaryXAxis.getTraceList().size() == 0)
-		{
-			swtFigure.removeAllTrace(true);
-		
-			//画走时曲线
-			DrawCurve dc = new DrawCurve(swtFigure);
-			//dc.createCurve("jb", "P, S, Pn, Sn, PcP, ScS", 100, 600, 100);
-			dc.createCurve("jb", "p,P,Pn,s,S,Sn", 10, 110, 50);
-		}
-		else
-		{
-			//移除所有与非主轴关联的Trace
-			//swtFigure.removeAllTrace(false);
-		}
-		
 		//读波形数据
 		SacTimeSeries sac2 = getSacData(fileName);
 		float[] sacx2 = sac2.getX();
@@ -112,7 +70,7 @@ public class DrawSeisData
 		y2Axis.setVisible(false);
 		
 		//------------------------------------------------------------------------------------------------------------------------
-		String waveName = sac2.getHeader().getKnetwk() + ":" +sac2.getHeader().getKstnm() + ":" + sac2.getHeader().getKcmpnm();
+		String waveName = sac2.getHeader().getKnetwk().trim() + ":" +sac2.getHeader().getKstnm().trim() + ":" + sac2.getHeader().getKcmpnm().trim();
 		Trace trace2 = new Trace(waveName,x2Axis, y2Axis, traceDataProvider2);
 		//trace2.setTraceColor(new Color(null, new RGB(0,0,255)));
 		trace2.setEnableMove(true);

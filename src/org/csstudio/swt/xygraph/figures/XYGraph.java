@@ -42,6 +42,7 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 
+import ca.ceaigp.muly.util.DrawData;
 import ca.ceaigp.muly.util.DrawSeisData;
 
 import edu.sc.seis.seisFile.sac.SacTimeSeries;
@@ -126,18 +127,18 @@ public class XYGraph extends Figure
 	 */
 	final public static RGB[] DEFAULT_TRACES_COLOR = 
 	{ 		
-		new RGB(21, 21, 196), // blue
-	    new RGB(242, 26, 26), // red
-	    new RGB(33, 179, 33), // green
-	    new RGB(0, 0, 0), // black
-	    new RGB(128, 0, 255), // violett
-	    new RGB(255, 170, 0), // (darkish) yellow
-	    new RGB(255, 0, 240), // pink
-	    new RGB(243, 132, 132), // peachy
-	    new RGB(0, 255, 11), // neon green
-	    new RGB(0, 214, 255), // neon blue
-	    new RGB(114, 40, 3), // brown
-	    new RGB(219, 128, 4), // orange
+		new RGB(21, 21, 196), 	// blue
+	    new RGB(242, 26, 26), 	// red
+	    new RGB(33, 179, 33), 	// green
+	    new RGB(128, 0, 255), 	// violett
+	    new RGB(255, 170, 0), 	// (darkish) yellow
+	    new RGB(255, 0, 240), 	// pink
+	    new RGB(243, 132, 132), 	// peachy
+	    new RGB(0, 255, 11), 	// neon green
+	    new RGB(0, 214, 255), 	// neon blue
+	    new RGB(114, 40, 3), 	// brown
+	    new RGB(0, 0, 0), 		// black
+	    new RGB(219, 128, 4), 	// orange
 	};
 
 	private int traceNum = 0;
@@ -763,7 +764,8 @@ public class XYGraph extends Figure
 		//System.out.println(sacFn);
 		if (sacFn != null)
 		{
-			new DrawSeisData(sacFn, this);
+			//new DrawSeisData(sacFn, this);
+			new DrawData(sacFn, this);
 		}
 	}
 

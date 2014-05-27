@@ -265,7 +265,7 @@ public class TraceConfigPage
 		errorBarCapWidthSpinner.setLayoutData(gd);
 
 		drawYErrorInAreaButton = new Button(errorBarGroup, SWT.CHECK);
-		drawYErrorInAreaButton.setText("Draw Y Error In Area");
+		drawYErrorInAreaButton.setText("DrawData Y Error In Area");
 		drawYErrorInAreaButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.BEGINNING, false, false, 2, 1));
 		initialize();
 	}
