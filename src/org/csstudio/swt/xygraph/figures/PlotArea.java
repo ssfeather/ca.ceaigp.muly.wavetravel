@@ -26,10 +26,18 @@ import org.eclipse.draw2d.MouseListener;
 import org.eclipse.draw2d.MouseMotionListener;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.Workbench;
+
+import ca.ceaigp.muly.travel.SlaveCurveView;
 
 /**
  * The plot area figure.
@@ -449,6 +457,27 @@ public class PlotArea extends Figure
 		public void mouseDoubleClicked(final MouseEvent me)
 		{ 
 			//System.out.println("**** MouseDoubleClicked ****");
+			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+			
+			//page.hideView(page.findView("ca.ceaigp.muly.travel.SlaveCurveView"));
+			
+			try
+	        {
+		        page.showView("ca.ceaigp.muly.travel.SlaveCurveView");
+	        }
+	        catch (PartInitException e)
+	        {
+		        // TODO Auto-generated catch block
+		        e.printStackTrace();
+	        }
+	        
+	        IViewPart part = page.findView("ca.ceaigp.muly.travel.SlaveCurveView");
+	        if (part instanceof SlaveCurveView) 
+	        {
+	        		SlaveCurveView view = (SlaveCurveView)part;
+	        		view.displayWave(xyGraph);
+	        }
+
 		}
 
 		@Override
@@ -595,13 +624,12 @@ public class PlotArea extends Figure
 		private void movePan()
 		{
 			List<Axis> axes = xyGraph.getXAxisList();
-			
+			//改变X轴
 			for (int i = 0; i < axes.size(); ++i)
 			{
 				final Axis axis = axes.get(i);
 				if(!axis.isShowMajorGrid())
 				{
-				//axis.setDirty(false);
 					for (Trace trace : axis.getTraceList())
 					{
 						if (trace.isEnableMove())
@@ -611,14 +639,13 @@ public class PlotArea extends Figure
 					}
 				}
 			}
-			
+			//改变轴
 			axes = xyGraph.getYAxisList();
 			for (int i = 0; i < axes.size(); ++i)
 			{
 				final Axis axis = axes.get(i);
 				if(!axis.isShowMajorGrid())
 				{
-					//axis.setDirty(false);
 					for (Trace trace : axis.getTraceList())
 					{
 						if (trace.isEnableMove())

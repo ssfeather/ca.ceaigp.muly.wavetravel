@@ -22,9 +22,14 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            name="View"
-            class="ca.ceaigp.muly.travel.View"
-            id="ca.ceaigp.muly.travel.view">
+            name="MasterCurveView"
+            class="ca.ceaigp.muly.travel.MasterCurveView"
+            id="ca.ceaigp.muly.travel.MasterCurveView">
+      </view>
+      <view
+            class="ca.ceaigp.muly.travel.SlaveCurveView"
+            id="ca.ceaigp.muly.travel.SlaveCurveView"
+            name="SlaveCurveView">
       </view>
    </extension>
    <extension
@@ -32,11 +37,25 @@
       <perspectiveExtension
             targetID="*">
          <view
-               standalone="true"
+               closeable="false"
+               id="ca.ceaigp.muly.travel.MasterCurveView"
                minimized="false"
+               ratio="0.7f"
+               relationship="top"
                relative="org.eclipse.ui.editorss"
-               relationship="left"
-               id="ca.ceaigp.muly.travel.view">
+               standalone="false"
+               visible="true">
+         </view>
+         <view
+               closeable="false"
+               id="ca.ceaigp.muly.travel.SlaveCurveView"
+               minimized="true"
+               moveable="false"
+               ratio="0.3f"
+               relationship="bottom"
+               relative="org.eclipse.ui.editorss"
+               standalone="false"
+               visible="true">
          </view>
       </perspectiveExtension>
    </extension>
