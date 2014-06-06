@@ -111,12 +111,16 @@ public class SlaveCurveView extends ViewPart
 		lws.setContents(toolbarArmedXYGraph);
 
 		swtFigure.setFont(XYGraphMediaFactory.getInstance().getFont(XYGraphMediaFactory.FONT_TAHOMA));
-		swtFigure.primaryXAxis.setTitle("Time");
-		swtFigure.primaryYAxis.setTitle("Dist");
+		//swtFigure.primaryXAxis.setTitle("Time");
+		//swtFigure.primaryYAxis.setTitle("Dist");
 		swtFigure.primaryYAxis.setAutoScale(true);
 		swtFigure.primaryXAxis.setAutoScale(true);
 		swtFigure.primaryXAxis.setShowMajorGrid(true);
 		swtFigure.primaryYAxis.setShowMajorGrid(true);
+		swtFigure.primaryXAxis.setShowTitle(false);
+		swtFigure.primaryYAxis.setShowTitle(false);
+		swtFigure.setShowLegend(false);
+		swtFigure.setShowTitle(false);
 		// swtFigure.primaryXAxis.setAutoFormat(true);
 		swtFigure.getPlotArea().setShowBorder(true);
 	}
@@ -181,7 +185,7 @@ public class SlaveCurveView extends ViewPart
 				Axis y2Axis = new Axis("Y2", true);
 				
 				x2Axis.setRange(new Range(swtFigure.primaryXAxis.getRange().getLower(), swtFigure.primaryXAxis.getRange().getUpper()/0.01));
-				y2Axis.setRange(traceDataProvider.getYDataMinMax().getLower()*2, traceDataProvider.getYDataMinMax().getUpper()*2);
+				y2Axis.setRange(traceDataProvider.getYDataMinMax().getLower(), traceDataProvider.getYDataMinMax().getUpper());
 				
 				swtFigure.addAxis(x2Axis);
 				swtFigure.addAxis(y2Axis);

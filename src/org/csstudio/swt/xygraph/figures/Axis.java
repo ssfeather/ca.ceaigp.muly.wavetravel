@@ -82,6 +82,8 @@ public class Axis extends LinearScale
 	private boolean showMajorGrid = false;
 
 	private boolean showMinorGrid = false;
+	
+	private boolean showTitle = true;
 
 	private Color majorGridColor;
 
@@ -250,6 +252,16 @@ public class Axis extends LinearScale
 		}
 		return d;
 	}
+	
+	public boolean isShowTitle()
+    {
+		return showTitle;
+    }
+
+	public void setShowTitle(boolean showTitle)
+    {
+    		this.showTitle = showTitle;
+    }
 
 	@Override
 	protected void paintClientArea(final Graphics graphics)
@@ -260,29 +272,37 @@ public class Axis extends LinearScale
 		super.paintClientArea(graphics);
 
 		// graphics.pushState();
-		graphics.setFont(titleFont);
-		final Dimension titleSize = FigureUtilities.getTextExtents(title, titleFont);
-		if (isHorizontal())
+		if(showTitle)
 		{
-			if (getTickLablesSide() == LabelSide.Primary) graphics.drawText(title, bounds.x + bounds.width / 2 - titleSize.width / 2, bounds.y + bounds.height
-			        - titleSize.height);
-			else graphics.drawText(title, bounds.x + bounds.width / 2 - titleSize.width / 2, bounds.y);
-		}
-		else
-		{
-			final int w = titleSize.height;
-			final int h = titleSize.width + 1;
-
-			if (getTickLablesSide() == LabelSide.Primary)
+			graphics.setFont(titleFont);
+			final Dimension titleSize = FigureUtilities.getTextExtents(title, titleFont);
+			if (isHorizontal())
 			{
-				GraphicsUtil.drawVerticalText(graphics, title, bounds.x, bounds.y + bounds.height / 2 - h / 2, false);
+				if (getTickLablesSide() == LabelSide.Primary) 
+				{
+					graphics.drawText(title, bounds.x + bounds.width / 2 - titleSize.width / 2, bounds.y + bounds.height- titleSize.height);
+				}
+				else 
+				{
+					graphics.drawText(title, bounds.x + bounds.width / 2 - titleSize.width / 2, bounds.y);
+				}
 			}
 			else
 			{
-				GraphicsUtil.drawVerticalText(graphics, title, bounds.x + bounds.width - w, bounds.y + bounds.height / 2 - h / 2, true);
+				final int w = titleSize.height;
+				final int h = titleSize.width + 1;
+
+				if (getTickLablesSide() == LabelSide.Primary)
+				{
+					GraphicsUtil.drawVerticalText(graphics, title, bounds.x, bounds.y + bounds.height / 2 - h / 2, false);
+				}
+				else
+				{
+					GraphicsUtil.drawVerticalText(graphics, title, bounds.x + bounds.width - w, bounds.y + bounds.height / 2 - h / 2, true);
+				}
 			}
 		}
-
+		
 		// graphics.popState();
 
 		// Show the start/end cursor or the 'rubberband' of a zoom operation?
