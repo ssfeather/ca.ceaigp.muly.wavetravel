@@ -460,7 +460,13 @@ public class PlotArea extends Figure
 			IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 			
 			//page.hideView(page.findView("ca.ceaigp.muly.travel.SlaveCurveView"));
-			
+			IViewPart part = page.findView("ca.ceaigp.muly.travel.SlaveCurveView");
+		    if (part instanceof SlaveCurveView) 
+		    {
+		        	SlaveCurveView view = (SlaveCurveView)part;
+		        	view.displayWave(xyGraph);
+		    }
+		        
 			try
 	        {
 		        page.showView("ca.ceaigp.muly.travel.SlaveCurveView");
@@ -471,12 +477,7 @@ public class PlotArea extends Figure
 		        e.printStackTrace();
 	        }
 	        
-	        IViewPart part = page.findView("ca.ceaigp.muly.travel.SlaveCurveView");
-	        if (part instanceof SlaveCurveView) 
-	        {
-	        		SlaveCurveView view = (SlaveCurveView)part;
-	        		view.displayWave(xyGraph);
-	        }
+	       
 
 		}
 

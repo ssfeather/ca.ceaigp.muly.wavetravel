@@ -34,7 +34,6 @@ public class SlaveCurveView extends ViewPart
 
 	public static final String ID = "ca.ceaigp.muly.travel.SlaveCurveView"; //$NON-NLS-1$
 	private LightweightSystem lws;
-	private XYGraph swtFigure = new XYGraph();
 
 	public SlaveCurveView()
 	{
@@ -99,30 +98,6 @@ public class SlaveCurveView extends ViewPart
 		
 		// use LightweightSystem to create the bridge between SWT and draw2D
 		lws = new LightweightSystem(new Canvas(parent, SWT.NONE));
-
-		// create a new XY Graph.
-		// XYGraph xyGraph = new XYGraph();
-
-		ToolbarArmedXYGraph toolbarArmedXYGraph = new ToolbarArmedXYGraph(swtFigure);
-		// toolbarArmedXYGraph.setShowToolbar(false);
-
-		//swtFigure.setTitle("Seismic Wave");
-		// set it as the content of LightwightSystem
-		lws.setContents(toolbarArmedXYGraph);
-
-		swtFigure.setFont(XYGraphMediaFactory.getInstance().getFont(XYGraphMediaFactory.FONT_TAHOMA));
-		//swtFigure.primaryXAxis.setTitle("Time");
-		//swtFigure.primaryYAxis.setTitle("Dist");
-		swtFigure.primaryYAxis.setAutoScale(true);
-		swtFigure.primaryXAxis.setAutoScale(true);
-		swtFigure.primaryXAxis.setShowMajorGrid(true);
-		swtFigure.primaryYAxis.setShowMajorGrid(true);
-		swtFigure.primaryXAxis.setShowTitle(false);
-		swtFigure.primaryYAxis.setShowTitle(false);
-		swtFigure.setShowLegend(false);
-		swtFigure.setShowTitle(false);
-		// swtFigure.primaryXAxis.setAutoFormat(true);
-		swtFigure.getPlotArea().setShowBorder(true);
 	}
 
 	/**
@@ -159,6 +134,28 @@ public class SlaveCurveView extends ViewPart
 	
 	public void displayWave(XYGraph xyGraph)
 	{
+		XYGraph swtFigure = new XYGraph();
+		//System.out.println(swtFigure.toString());
+	
+		ToolbarArmedXYGraph toolbarArmedXYGraph = new ToolbarArmedXYGraph(swtFigure);
+		lws.setContents(toolbarArmedXYGraph);
+
+		swtFigure.setFont(XYGraphMediaFactory.getInstance().getFont(XYGraphMediaFactory.FONT_TAHOMA));
+		//swtFigure.primaryXAxis.setTitle("Time");
+		//swtFigure.primaryYAxis.setTitle("Dist");
+		swtFigure.primaryYAxis.setAutoScale(true);
+		swtFigure.primaryXAxis.setAutoScale(true);
+		swtFigure.primaryXAxis.setShowMajorGrid(true);
+		swtFigure.primaryYAxis.setShowMajorGrid(true);
+		swtFigure.primaryXAxis.setShowTitle(false);
+		swtFigure.primaryYAxis.setShowTitle(false);
+		swtFigure.setShowLegend(false);
+		swtFigure.setShowTitle(false);
+		// swtFigure.primaryXAxis.setAutoFormat(true);
+		swtFigure.getPlotArea().setShowBorder(true);
+		
+		//--------------------------------------------------------------------------------------------------
+		
 		List<Trace> traceList = xyGraph.getPlotArea().getTraceList();
 		for(Trace trace : traceList)
 		{
@@ -180,7 +177,6 @@ public class SlaveCurveView extends ViewPart
 				}
 				
 				CircularBufferDataProvider traceDataProvider = (CircularBufferDataProvider)trace.getDataProvider();
-				
 				Axis x2Axis = new Axis("X2", false);
 				Axis y2Axis = new Axis("Y2", true);
 				
@@ -198,6 +194,7 @@ public class SlaveCurveView extends ViewPart
 				trace2.setEnableMove(true);
 				swtFigure.addTrace(trace2);
 				trace2.setSingleEnableMove(true);
+				trace2.setTraceColor(trace.getTraceColor());
 			}
 		}
 		
