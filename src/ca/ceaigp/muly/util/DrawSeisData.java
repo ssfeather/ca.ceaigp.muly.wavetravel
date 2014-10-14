@@ -33,6 +33,11 @@ public class DrawSeisData
 		SacTimeSeries sac2 = getSacData(fileName);
 		float[] sacx2 = sac2.getX();
 		float[] sacy2 = sac2.getY();
+		//波形数据取均值
+		WaveformDsp wfd = new WaveformDsp(sacy2);
+		wfd.removeMean();
+		sacy2=wfd.getSample();
+		
 		CircularBufferDataProvider traceDataProvider2 = new CircularBufferDataProvider(true);
 		
 		//------------显示地震波形----------------------------

@@ -13,7 +13,8 @@ public class DrawData
 			//»­×ßÊ±ÇúÏß
 			DrawCurve dc = new DrawCurve(swtFigure);
 			//dc.createCurve("jb", "P, S, Pn, Sn, PcP, ScS", 100, 600, 100);
-			dc.createCurve("iasp91", "Pg,Pn,PmP,Sg,Sn,SmS", 10, 110, 50);
+			//dc.createCurve("iasp91", "P,pP,Pg,Pn,PmP,S,sS,Sg,Sn,SmS", 10, 100, 10);
+			dc.createCurve("iasp91", "P,Pg,Pn,S,Sg,Sn", 10, 200, 50);
 		}
 		else
 		{
