@@ -154,6 +154,7 @@ public class DrawCurve
 		//swtFigure.primaryYAxis.setRange(30,5);
 	}
 	
+	//根据最大深度，最小深度和步长，画走时曲线
 	public void createCurve(String model, String phaseList, int depthMin, int depthMax, int step)
 	{
 		String[] travelArgs = new String[3];
@@ -171,6 +172,83 @@ public class DrawCurve
 		
 	}
 	
+	//根据深度数组，画走时曲线
+	public void createCurve(String model, String phaseList, int[] depths)
+	{
+		String[] travelArgs = new String[3];
+		
+		configColor(phaseList, depths);
+		
+		for(int i : depths )
+		{
+			travelArgs[0] = model;
+			travelArgs[1] = String.valueOf(i);
+			travelArgs[2] = phaseList;
+			
+			createCurve(travelArgs);
+		}
+		
+	}
+	
+	//根据深度数组，配置走时曲线颜色
+	private void configColor(String phaseList, int[] depths)
+	{
+		String[] phases = phaseList.split(",");
+		List<String> pPhases = new ArrayList<String>();
+		List<String> sPhases = new ArrayList<String>();
+		
+		//将p，s震相分类
+		for(int i=0; i < phases.length; i++)
+		{
+			String firstPN = phases[i].substring(0,1);
+			if(firstPN.equals("p") || firstPN.equals("P")) 
+			{
+				pPhases.add(phases[i]);
+			}
+			if(firstPN.equals("s") || firstPN.equals("S")) 
+			{
+				sPhases.add(phases[i]);
+			}
+		}
+		
+		int colorStep = (255-128)/(depths.length);
+		int tempColorStep = 0;
+		int colorType = DEFAULT_CURVE_COLOR.length;
+		//给P震相走时曲线分配颜色
+		for(int i=0; i < pPhases.size(); i++)
+		{
+			for(int j : depths )
+			{
+				Double depth = new Double(j);
+				String tempPhaseName = pPhases.get(i) + "_"+ depth.toString();
+				int[] rgbValue = DEFAULT_CURVE_COLOR[i%colorType];
+				int redColor = rgbValue[0] + tempColorStep;
+				int greenColor = rgbValue[1] + tempColorStep;
+				int blueColor = rgbValue[2] + tempColorStep;
+				curveColor.put(tempPhaseName, new RGB(redColor,greenColor,blueColor));
+				tempColorStep = tempColorStep + colorStep;
+			}
+			tempColorStep = 0;
+		}
+		//给S震相走时曲线分配颜色
+		for(int i=0; i < sPhases.size(); i++)
+		{
+			for(int j : depths )
+			{
+				Double depth = new Double(j);
+				String tempPhaseName = sPhases.get(i) + "_"+ depth.toString();
+				int[] rgbValue = DEFAULT_CURVE_COLOR[i%colorType];
+				int redColor = rgbValue[0] + tempColorStep;
+				int greenColor = rgbValue[1] + tempColorStep;
+				int blueColor = rgbValue[2] + tempColorStep;
+				curveColor.put(tempPhaseName, new RGB(redColor,greenColor,blueColor));
+				tempColorStep = tempColorStep + colorStep;
+			}
+			tempColorStep = 0;
+		}
+	}
+	
+	//根据最大深度，最小深度和步长，配置走时曲线颜色
 	private void configColor(String phaseList, int depthMin, int depthMax, int step)
 	{
 		String[] phases = phaseList.split(",");
