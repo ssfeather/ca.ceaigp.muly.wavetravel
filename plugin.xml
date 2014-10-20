@@ -77,14 +77,26 @@
          point="org.eclipse.core.runtime.products">
       <product
             application="ca.ceaigp.muly.travel.application"
-            name="动态多深度走时曲线图">
+            name="Wave Travel">
          <property
                name="windowImages"
-               value="icons/alt_window_16.gif,icons/alt_window_32.gif">
+               value="icons/alt_window_16.gif,icons/alt_window_32.gif,icons/earth_scan_48.png,icons/earth_scan_64.png,icons/earth_scan_128.png">
          </property>
          <property
                 name="preferenceCustomization"
                 value="plugin_customization.ini"/>
+         <property
+               name="appName"
+               value="Wave Travel">
+         </property>
+         <property
+               name="aboutImage"
+               value="icons/earth_scan_128.png">
+         </property>
+         <property
+               name="aboutText"
+               value="Wave Travel">
+         </property>
       </product>
    </extension>
 

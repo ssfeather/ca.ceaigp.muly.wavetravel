@@ -3,7 +3,10 @@ package ca.ceaigp.muly.util;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.Properties;
+
+import org.eclipse.core.runtime.Platform;
 
 public class ReadConfigFile
 {
@@ -31,7 +34,13 @@ public class ReadConfigFile
 		try
 		{
 			Properties props = new Properties();
-			InputStream inputStream  = getClass().getResourceAsStream("/config.profile");  
+			
+			//System.out.println(url.getFile());
+			//System.out.println(Platform.getInstallLocation().getURL() + "config.profile");
+			URL url = new URL(Platform.getInstallLocation().getURL() + "config.profile");
+			
+			InputStream inputStream = url.openConnection().getInputStream();
+			//InputStream inputStream  = getClass().getResourceAsStream("/config.profile");  
 			props.load(inputStream);
 			//props.loadFromXML(inputStream);
             inputStream.close();
