@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="Wave Travel" uid="WaveTravel.app" id="ca.ceaigp.muly.travel.product" application="ca.ceaigp.muly.travel.application" version="1.0.0.qualifier" useFeatures="false" includeLaunchers="true">
+<product name="Wave Travel" uid="ca.ceaigp.muly.WaveTravel" id="ca.ceaigp.muly.travel.product" application="ca.ceaigp.muly.travel.application" version="1.0.0.qualifier" useFeatures="false" includeLaunchers="true">
 
    <aboutInfo>
       <image path="icons/earth_scan_128.png"/>
@@ -17,20 +17,7 @@
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
-   <windowImages i16="icons/alt_window_16.gif" i32="icons/alt_window_32.gif" i48="icons/earth_scan_48.png" i64="icons/earth_scan_64.png" i128="icons/earth_scan_128.png"/>
-
-
-   <launcher>
-      <solaris/>
-      <win useIco="false">
-         <bmp/>
-      </win>
-   </launcher>
-
-
-   <vm>
-   </vm>
-
+   <windowImages i16="icons/s3ksac_16.png" i32="icons/s3ksac_32.png" i48="icons/s3ksac_48.png" i64="icons/s3ksac_64.png" i128="icons/s3ksac_128.png"/>
 
    <plugins>
       <plugin id="ca.ceaigp.muly.travel"/>

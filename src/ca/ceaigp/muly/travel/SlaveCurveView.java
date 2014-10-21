@@ -28,6 +28,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 import ca.ceaigp.muly.util.DrawCurve;
+import ca.ceaigp.muly.util.ReadConfigFile;
 
 public class SlaveCurveView extends ViewPart
 {
@@ -164,11 +165,14 @@ public class SlaveCurveView extends ViewPart
 				if (swtFigure.primaryXAxis.getTraceList().size() == 0)
 				{
 					swtFigure.removeAllTrace(true);
-				
+					//读取配置文件信息
+					ReadConfigFile rcf = new ReadConfigFile();
+					
 					//画走时曲线
 					DrawCurve dc = new DrawCurve(swtFigure);
 					//dc.createCurve("jb", "P, S, Pn, Sn, PcP, ScS", 100, 600, 100);
-					dc.createCurve("iasp91", "Pg,Pn,PmP,Sg,Sn,SmS", 10, 110, 50);
+					//dc.createCurve("iasp91", "Pg,Pn,PmP,Sg,Sn,SmS", 10, 110, 50);
+					dc.createCurve(rcf.getModel(), rcf.getPhases(), rcf.getDepths());
 				}
 				else
 				{

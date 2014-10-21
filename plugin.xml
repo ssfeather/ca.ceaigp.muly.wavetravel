@@ -80,7 +80,7 @@
             name="Wave Travel">
          <property
                name="windowImages"
-               value="icons/alt_window_16.gif,icons/alt_window_32.gif,icons/earth_scan_48.png,icons/earth_scan_64.png,icons/earth_scan_128.png">
+               value="icons/s3ksac_16.png,icons/s3ksac_32.png,icons/s3ksac_48.png,icons/s3ksac_64.png,icons/s3ksac_128.png">
          </property>
          <property
                 name="preferenceCustomization"
