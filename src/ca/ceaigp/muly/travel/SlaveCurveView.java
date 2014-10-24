@@ -1,5 +1,8 @@
 package ca.ceaigp.muly.travel;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 import org.csstudio.swt.xygraph.dataprovider.CircularBufferDataProvider;
@@ -27,8 +30,10 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
+import ca.ceaigp.muly.util.DistAz;
 import ca.ceaigp.muly.util.DrawCurve;
 import ca.ceaigp.muly.util.ReadConfigFile;
+import edu.sc.seis.seisFile.sac.SacTimeSeries;
 
 public class SlaveCurveView extends ViewPart
 {
@@ -162,11 +167,12 @@ public class SlaveCurveView extends ViewPart
 		{
 			if(trace.isEnableMove())
 			{
+				//读取配置文件信息
+				ReadConfigFile rcf = new ReadConfigFile();
+				
 				if (swtFigure.primaryXAxis.getTraceList().size() == 0)
 				{
 					swtFigure.removeAllTrace(true);
-					//读取配置文件信息
-					ReadConfigFile rcf = new ReadConfigFile();
 					
 					//画走时曲线
 					DrawCurve dc = new DrawCurve(swtFigure);
@@ -180,6 +186,16 @@ public class SlaveCurveView extends ViewPart
 					//swtFigure.removeAllTrace(false);
 				}
 				
+				//计算震中距、方位角、后方位角
+				/*
+				SacTimeSeries sac2 = getSacData(trace.getFilename());
+				double stla = sac2.getHeader().getStla();
+				double stlo = sac2.getHeader().getStlo();
+				double evla = rcf.getEvla();
+				double evlo = rcf.getEvlo();
+				DistAz distaz = new DistAz(stla, stlo, evla, evlo);
+				System.out.println("   dist=" + distaz.getDelta() + "   baz=" + distaz.getBaz() + "   az=" + distaz.getAz());
+				*/
 				CircularBufferDataProvider traceDataProvider = (CircularBufferDataProvider)trace.getDataProvider();
 				Axis x2Axis = new Axis("X2", false);
 				Axis y2Axis = new Axis("Y2", true);
@@ -202,6 +218,26 @@ public class SlaveCurveView extends ViewPart
 			}
 		}
 		
+	}
+	
+	private SacTimeSeries getSacData(String fn)
+	{
+		SacTimeSeries sac = new SacTimeSeries();
+		try
+        {
+	       sac.read(new File(fn));
+        }
+        catch (FileNotFoundException e)
+        {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+        }
+		return sac;
 	}
 	
 	/**

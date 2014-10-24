@@ -3,6 +3,7 @@ package ca.ceaigp.muly.util;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import org.csstudio.swt.xygraph.dataprovider.CircularBufferDataProvider;
 import org.csstudio.swt.xygraph.figures.Axis;
@@ -33,6 +34,17 @@ public class DrawSeisData
 		SacTimeSeries sac2 = getSacData(fileName);
 		float[] sacx2 = sac2.getX();
 		float[] sacy2 = sac2.getY();
+		
+		//System.out.println("sacx2 length="+sacx2.length);
+		/*
+		for(float i:sacx2)
+		{
+			System.out.println(i);
+		}
+		*/
+		//sac2.printHeader(new PrintWriter(System.out,true));
+		//System.out.println(sac2.getHeader().getSdelta());
+		
 		//波形数据取均值
 		WaveformDsp wfd = new WaveformDsp(sacy2);
 		wfd.removeMean();
@@ -57,18 +69,21 @@ public class DrawSeisData
 		//y2Axis.setTitle("Amplitude");
 		
 		//y2Axis.setAutoScale(false);
-		x2Axis.setRange(new Range(swtFigure.primaryXAxis.getRange().getLower(), swtFigure.primaryXAxis.getRange().getUpper()/sac2.getHeader().getDelta()));
+		//x2Axis.setRange(new Range(swtFigure.primaryXAxis.getRange().getLower(), swtFigure.primaryXAxis.getRange().getUpper()/sac2.getHeader().getDelta()));
+		x2Axis.setRange(new Range(0,(swtFigure.primaryXAxis.getRange().getUpper()-swtFigure.primaryXAxis.getRange().getLower())/sac2.getHeader().getDelta()));
 		y2Axis.setRange(traceDataProvider2.getYDataMinMax().getLower()*zoomRange, traceDataProvider2.getYDataMinMax().getUpper()*zoomRange);
 		//y2Axis.setRange(new Range(swtFigure.primaryYAxis.getRange().getLower(), swtFigure.primaryYAxis.getRange().getUpper()*200));
 		//System.out.println(swtFigure.primaryYAxis.getRange().getLower());
 		//System.out.println(swtFigure.primaryYAxis.getRange().getUpper());
+		//System.out.println(swtFigure.primaryXAxis.getRange().getLower());
+		//System.out.println(swtFigure.primaryXAxis.getRange().getUpper());
 		
 		swtFigure.addAxis(x2Axis);
 		swtFigure.addAxis(y2Axis);
 		
 		x2Axis.setVisible(false);
 		y2Axis.setVisible(false);
-		
+
 		//------------------------------------------------------------------------------------------------------------------------
 		String waveName = sac2.getHeader().getKnetwk().trim() + ":" +sac2.getHeader().getKstnm().trim() + ":" + sac2.getHeader().getKcmpnm().trim();
 		Trace trace2 = new Trace(waveName,x2Axis, y2Axis, traceDataProvider2);
@@ -78,7 +93,7 @@ public class DrawSeisData
 		trace2.setSingleEnableMove(true);
 		//swtFigure.setShowLegend(false);
 		//this.removeTrace(trace2);
-		
+		trace2.setFilename(fileName);
 	}
 	
 	private SacTimeSeries getSacData(String fn)

@@ -42,10 +42,7 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 
-import ca.ceaigp.muly.util.DrawData;
 import ca.ceaigp.muly.util.DrawSeisData;
-
-import edu.sc.seis.seisFile.sac.SacTimeSeries;
 
 /**
  * XY-Graph Figure.
@@ -764,8 +761,7 @@ public class XYGraph extends Figure
 		//System.out.println(sacFn);
 		if (sacFn != null)
 		{
-			//new DrawSeisData(sacFn, this);
-			new DrawData(sacFn, this);
+			new DrawSeisData(sacFn, this);
 		}
 	}
 

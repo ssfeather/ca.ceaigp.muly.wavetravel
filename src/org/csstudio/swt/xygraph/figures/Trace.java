@@ -248,6 +248,18 @@ public class Trace extends Figure implements IDataProviderListener, IAxisListene
 	private Color errorBarColor;
 	private boolean drawYErrorInArea = false;
 	private XYGraph xyGraph;
+	
+	private String filename;
+
+	public String getFilename()
+    {
+		return filename;
+    }
+
+	public void setFilename(String filename)
+    {
+    		this.filename = filename;
+    }
 
 	private List<ISample> hotSampleist;
 

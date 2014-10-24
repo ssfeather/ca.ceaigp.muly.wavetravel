@@ -477,8 +477,6 @@ public class PlotArea extends Figure
 		        e.printStackTrace();
 	        }
 	        
-	       
-
 		}
 
 		@Override

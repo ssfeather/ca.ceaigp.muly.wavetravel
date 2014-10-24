@@ -37,7 +37,7 @@ public class WaveformDsp
 	
 	public float[] getSample()
     {
-    	return sample;
+    		return sample;
     }
 
 	/**

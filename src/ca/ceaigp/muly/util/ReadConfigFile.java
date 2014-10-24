@@ -13,7 +13,19 @@ public class ReadConfigFile
 	private String model = "iasp91";
 	private String phases;
 	private int[] depths;
+	private double evla;
+	private double evlo;
 	
+	public double getEvla()
+    {
+    	return evla;
+    }
+
+	public double getEvlo()
+    {
+    	return evlo;
+    }
+
 	public String getPhases()
     {
     		return this.phases;
@@ -55,6 +67,8 @@ public class ReadConfigFile
 				//System.out.println(depths[i]);
 			}
 			
+			evla = Double.parseDouble(props.getProperty("evla","0.0"));
+			evlo = Double.parseDouble(props.getProperty("evlo","0.0"));
 			//System.out.println(model);
 			//System.out.println(phases);
 			//System.out.println(props.getProperty("Depths"));
