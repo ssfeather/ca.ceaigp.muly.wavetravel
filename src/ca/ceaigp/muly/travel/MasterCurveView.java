@@ -29,7 +29,7 @@ public class MasterCurveView extends ViewPart
 {
 	public static final String ID = "ca.ceaigp.muly.travel.view";
 	private LightweightSystem lws;
-
+  
 	public MasterCurveView()
 	{
 	}
